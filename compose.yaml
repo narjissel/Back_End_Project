@@ -1,0 +1,24 @@
+services:
+  cassandra:
+    image: 'cassandra:latest'
+    environment:
+      - 'CASSANDRA_DC=datacenter1'
+    ports:
+      - '9042:9042'
+    healthcheck:
+      test: [ "CMD", "cqlsh", "-e", "DESCRIBE KEYSPACES" ]
+      timeout: "70s"
+      retries: 10
+
+  cassandra-init:
+    container_name: 'narjiss'
+    image: 'cassandra:latest'
+    ports:
+      - '7000:7000'
+    depends_on:
+      cassandra:
+        condition: 'service_healthy'
+    restart: 'no'
+    volumes:
+      - './scripts:/scripts'
+    command: [ "bash", "-c", "/scripts/db.sh && cassandra -f" ]

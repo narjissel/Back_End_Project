@@ -1,4 +1,4 @@
-package Entity;
+package ma.fpl.ecoapp.Entity;
 
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
